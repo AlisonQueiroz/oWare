@@ -123,6 +123,11 @@
           }
         }
       }
-    }},
-  "defaultProject": "oWare"
+    }
+  },
+  "defaultProject": "oWare",
+  "cli": {
+    "analytics": "4384df4f-cad5-42c7-ad0d-cf696c419eb3",
+    "defaultCollection": "@datorama/akita"
+  }
 }
