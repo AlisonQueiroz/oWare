@@ -11,14 +11,18 @@ import { environment } from '../environments/environment';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
+import { ItemsComponent } from './items/items.component';
+import { MaterialModule } from './Shared/material.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ItemsComponent
   ],
   imports: [
     FormsModule,
     BrowserModule,
+    MaterialModule,
     AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
