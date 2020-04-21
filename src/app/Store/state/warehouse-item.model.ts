@@ -1,6 +1,6 @@
 import { ID } from '@datorama/akita';
 export interface WarehouseItem {
-  id: ID;
+  id?: ID;
   name: string;
   coord: string;
   quantity: number;

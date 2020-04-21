@@ -1,0 +1,69 @@
+.container-fluid {
+  padding: 24px 32px;
+}
+
+table {
+  width: 100%;
+  .mat-column-actions {
+    padding: 0 !important;
+    width: 50px;
+
+    button {
+      display: none;
+    }
+  }
+
+  td.mat-cell {
+    vertical-align: baseline;
+
+    &.mat-cell:not(:first-child) {
+      padding: 0 10px;
+    }
+  }
+
+  .mat-column-id {
+    width: 80px;
+  }
+
+  .mat-column-actions {
+    padding: 0 !important;
+    width: 80px;
+  }
+
+  tr[mat-row] {
+    transition: background 80ms linear;
+
+    &:not(.editing) {
+      .mat-column-actions button {
+        display: none;
+      }
+    }
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.02);
+
+      .mat-column-actions button {
+        display: initial;
+        opacity: 1;
+      }
+    }
+  }
+}
+
+// for disabled inputs
+:host ::ng-deep mat-form-field {
+  .mat-form-field-infix {
+    width: auto;
+  }
+  &.mat-form-field-disabled {
+    .mat-form-field-underline,
+    .mat-form-field-label-wrapper {
+      visibility: hidden;
+    }
+
+    input,
+    .mat-select-value-text {
+      color: initial;
+    }
+  }
+}

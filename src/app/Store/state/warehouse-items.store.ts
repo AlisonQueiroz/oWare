@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { WarehouseItem } from './warehouse-item.model';
-import { EntityState, ActiveState, EntityStore, StoreConfig } from '@datorama/akita';
+import { EntityStore, StoreConfig } from '@datorama/akita';
+import { CollectionState } from 'akita-ng-fire';
 
-export interface WarehouseItemsState extends EntityState<WarehouseItem, string>, ActiveState<string> {}
+export interface WarehouseItemsState extends CollectionState<WarehouseItem> {}
 
 @Injectable({ providedIn: 'root' })
-@StoreConfig({ name: 'w-items' })
+@StoreConfig({ name: 'item' })
 export class WarehouseItemsStore extends EntityStore<WarehouseItemsState> {
 
   constructor() {

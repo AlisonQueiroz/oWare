@@ -3,7 +3,7 @@ import { WarehouseItemsStore, WarehouseItemsState } from './warehouse-items.stor
 import { CollectionConfig, CollectionService } from 'akita-ng-fire';
 
 @Injectable({ providedIn: 'root' })
-@CollectionConfig({ path: 'w-items' })
+@CollectionConfig({ path: 'item' })
 export class WarehouseItemsService extends CollectionService<WarehouseItemsState> {
 
   constructor(store: WarehouseItemsStore) {

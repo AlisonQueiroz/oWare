@@ -1,5 +1,5 @@
 import { Component, OnInit, Injectable, ChangeDetectionStrategy, ViewChild, OnDestroy } from '@angular/core';
-import { ValidatorService, EditableDataSource } from '../Shared/Components/editable-table';
+import { ValidatorService, EditableDataSource, TableElement } from '../Shared/Components/editable-table';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatSort } from '@angular/material/sort';
 import { WarehouseItemsQuery } from '../Store/state/warehouse-items.query';
@@ -8,7 +8,7 @@ import { Subject } from 'rxjs';
 import { WarehouseItem } from '../Store/state/warehouse-item.model';
 import { mergeAllLoading } from '../Store';
 import { NgEntityServiceLoader } from '@datorama/akita-ng-entity-service';
-import * as firebase from 'firebase';
+import { takeUntil } from 'rxjs/operators';
 
 @Injectable()
 export class Validator implements ValidatorService {
@@ -17,7 +17,7 @@ export class Validator implements ValidatorService {
   getValidator() {
     return this.fb.group({
       id: null,
-      name: null,
+      name: [null, Validators.required],
       coord: [null, Validators.required],
       quantity: [null, Validators.required]
     });
@@ -35,13 +35,12 @@ export class ItemsComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
 
   readonly data$ = this.itemsQuery.selectAll();
-  readonly loading$ = mergeAllLoading(this.loader.loadersFor('w-items'));
+  readonly loading$ = mergeAllLoading(this.loader.loadersFor('item'));
 
   readonly dataSource = new EditableDataSource<WarehouseItem>([], this.validator);
   private readonly destroy$ = new Subject();
 
   readonly displayedColumns = [
-    'id',
     'name',
     'coord',
     'quantity',
@@ -56,12 +55,12 @@ export class ItemsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    const t = firebase.database();
-    debugger;
-    this.itemsService.collection.get().subscribe(data => {
-      debugger;
-      // this.dataSource.setData(null);
-    });
+    this.itemsService
+      .syncCollection().pipe(
+        takeUntil(this.destroy$)
+      ).subscribe(data => {
+        this.dataSource.setData([data[0].payload.doc.data()]);
+      });
   }
 
   ngOnDestroy() {
@@ -69,12 +68,22 @@ export class ItemsComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  confirmEditCreate(row) {
+  confirmEditCreate(row: TableElement<WarehouseItem>) {
+    if (!row.editing) {
+      return row.confirmEditCreate();
+    }
 
+    row.data.id
+      ? this.itemsService.update(row.data)
+      : this.itemsService.add(row.data);
   }
 
-  cancelOrDelete(row) {
+  cancelOrDelete(row: TableElement<WarehouseItem>) {
+    if (row.editing) {
+      return row.cancelOrDelete();
+    }
 
+    this.itemsService.remove(row.data.id as string);
   }
 
 }
