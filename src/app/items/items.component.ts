@@ -15,6 +15,7 @@ export class Validator implements ValidatorService {
   getValidator() {
     return this.fb.group({
       id: null,
+      pn: [null, Validators.required],
       name: [null, Validators.required],
       coord: [null, Validators.required],
       quantity: [null, Validators.required]
@@ -42,7 +43,16 @@ export class ItemsComponent implements OnInit, AfterContentInit, OnDestroy {
     'name',
     'coord',
     'quantity',
-    'actions'
+    'pn'
+  ];
+
+  readonly allColumns = this.displayedColumns.concat('actions');
+
+  readonly columnTitles = [
+    'Name',
+    'Coord',
+    'Quantity',
+    'Part Number'
   ];
 
   constructor(
@@ -54,7 +64,6 @@ export class ItemsComponent implements OnInit, AfterContentInit, OnDestroy {
   ngOnInit() {
     this.itemsService
       .syncCollection().pipe(
-        // takeUntil(this.destroy$)
         take(1)
       ).subscribe(data => {
           this.dataSource.setData(data.map(e => e.payload.doc.data()));

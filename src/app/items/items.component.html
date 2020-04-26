@@ -1,119 +1,86 @@
 <div class="container-fluid">
-  <mat-card>
-    <mat-toolbar class="primary d-flex">
-      <span class="mr-2" fxFlex>Warehouse Items</span>
-      <button
-        mat-button
-        [disabled]="loading$ | async"
-        (click)="dataSource.createNew()"
+  <mat-toolbar class="primary d-flex">
+    <span class="mr-2" fxFlex>Warehouse Items</span>
+    <button
+      mat-button
+      [disabled]="loading$ | async"
+      (click)="dataSource.createNew()"
+    >
+      <mat-icon>add</mat-icon>New
+    </button>
+  </mat-toolbar>
+
+  <ng-container *ngIf="!(loading$ | async); else loading">
+    <table mat-table matSort class="mat-elevation-z4" [dataSource]="dataSource">
+      <ng-container
+        *ngFor="let column of displayedColumns; let i = index"
+        [matColumnDef]="column"
       >
-        <mat-icon>add</mat-icon>New
-      </button>
-    </mat-toolbar>
+        <th mat-header-cell mat-sort-header *matHeaderCellDef>
+          {{ columnTitles[i] }}
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-form-field>
+            <mat-label>{{ columnTitles[i] }}</mat-label>
+            <input
+              matInput
+              required
+              mat-cell
+              [formControl]="row.form.get(column)"
+            />
+            <mat-error>This field is required</mat-error>
+          </mat-form-field>
+        </td>
+      </ng-container>
 
-    <ng-container *ngIf="!(loading$ | async); else loading">
-      <table
-        mat-table
-        matSort
-        class="mat-elevation-z4"
-        [dataSource]="dataSource"
-      >
-        <ng-container matColumnDef="name">
-          <th mat-header-cell mat-sort-header *matHeaderCellDef>Name</th>
-          <td mat-cell *matCellDef="let row">
-            <mat-form-field>
-              <mat-label>Name</mat-label>
-              <input
-                matInput
-                required
-                mat-cell
-                [formControl]="row.form.controls.name"
-              />
-              <mat-error>This field is required</mat-error>
-            </mat-form-field>
-          </td>
-        </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+          <button
+            mat-icon-button
+            color="primary"
+            [disabled]="loading$ | async"
+            *ngIf="!(row.editChanges | async)"
+            (click)="row.startEdit()"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
 
-        <ng-container matColumnDef="coord">
-          <th mat-header-cell mat-sort-header *matHeaderCellDef>Coord</th>
-          <td mat-cell *matCellDef="let row">
-            <mat-form-field>
-              <mat-label>Coord</mat-label>
-              <input
-                matInput
-                mat-cell
-                [formControl]="row.form.controls.coord"
-              />
-              <mat-error>This field is required</mat-error>
-            </mat-form-field>
-          </td>
-        </ng-container>
+          <button
+            mat-icon-button
+            color="success"
+            [disabled]="row.form.invalid"
+            (click)="confirmEditCreate(row)"
+            *ngIf="row.editChanges | async"
+          >
+            <mat-icon>check</mat-icon>
+          </button>
 
-        <ng-container matColumnDef="quantity">
-          <th mat-header-cell mat-sort-header *matHeaderCellDef>Quantity</th>
-          <td mat-cell *matCellDef="let row">
-            <mat-form-field matTooltipPosition="left">
-              <mat-label>Quantity</mat-label>
-              <input
-                matInput
-                required
-                [formControl]="row.form.controls.quantity"
-              />
-              <mat-error>This field is required</mat-error>
-            </mat-form-field>
-          </td>
-        </ng-container>
+          <button
+            mat-icon-button
+            color="warn"
+            (click)="cancelOrDelete(row)"
+          >
+            <mat-icon>{{
+              (row.editChanges | async) ? "close" : "delete"
+            }}</mat-icon>
+          </button>
+        </td>
+      </ng-container>
 
-        <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let row">
-            <button
-              mat-icon-button
-              color="primary"
-              [disabled]="loading$ | async"
-              *ngIf="!(row.editChanges | async)"
-              (click)="row.startEdit()"
-            >
-              <mat-icon>edit</mat-icon>
-            </button>
+      <tr mat-header-row *matHeaderRowDef="allColumns"></tr>
 
-            <button
-              mat-icon-button
-              color="success"
-              [disabled]="row.form.invalid || (loading$ | async)"
-              (click)="confirmEditCreate(row)"
-              *ngIf="row.editChanges | async"
-            >
-              <mat-icon>check</mat-icon>
-            </button>
+      <tr
+        mat-row
+        [class.editing]="row.editChanges | async"
+        *matRowDef="let row; columns: allColumns"
+      ></tr>
+    </table>
+  </ng-container>
 
-            <button
-              mat-icon-button
-              color="warn"
-              [disabled]="loading$ | async"
-              (click)="cancelOrDelete(row)"
-            >
-              <mat-icon>{{
-                (row.editChanges | async) ? "close" : "delete"
-              }}</mat-icon>
-            </button>
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-
-        <tr
-          mat-row
-          [class.editing]="row.editChanges | async"
-          *matRowDef="let row; columns: displayedColumns"
-        ></tr>
-      </table>
-    </ng-container>
-
-    <ng-template #loading>
-      <div class="d-flex justify-content-center">
-        <mat-spinner></mat-spinner>
-      </div>
-    </ng-template>
-  </mat-card>
+  <ng-template #loading>
+    <div class="d-flex justify-content-center">
+      <mat-spinner></mat-spinner>
+    </div>
+  </ng-template>
 </div>
