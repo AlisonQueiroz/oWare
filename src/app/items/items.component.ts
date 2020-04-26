@@ -89,7 +89,7 @@ export class ItemsComponent implements OnInit, AfterContentInit, OnDestroy {
     }
 
     this.itemsService.remove(row.data.id as string);
-    row.cancelOrDelete();
+    row.delete();
   }
 
 }
