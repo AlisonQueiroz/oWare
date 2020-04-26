@@ -21,13 +21,9 @@ table {
     }
   }
 
-  .mat-column-id {
-    width: 80px;
-  }
-
   .mat-column-actions {
     padding: 0 !important;
-    width: 80px;
+    min-width: 80px;
   }
 
   tr[mat-row] {
@@ -52,9 +48,8 @@ table {
 
 // for disabled inputs
 :host ::ng-deep mat-form-field {
-  .mat-form-field-infix {
-    width: auto;
-  }
+  width: 95%;
+
   &.mat-form-field-disabled {
     .mat-form-field-underline,
     .mat-form-field-label-wrapper {
@@ -66,4 +61,12 @@ table {
       color: initial;
     }
   }
+}
+
+span.mr-2 {
+  flex: 1 0 0%
+}
+
+.d-flex.justify-content-center {
+  text-align: -webkit-center;
 }

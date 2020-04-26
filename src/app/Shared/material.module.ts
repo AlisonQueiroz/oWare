@@ -1,3 +1,4 @@
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,6 +11,7 @@ import { NgModule } from '@angular/core';
 
 @NgModule({
   exports: [
+    MatProgressSpinnerModule,
     MatFormFieldModule,
     MatToolbarModule,
     MatButtonModule,

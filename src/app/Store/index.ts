@@ -7,9 +7,7 @@ export const mergeAllLoading = (loader: {
   add$: Observable<boolean>;
   update$: Observable<boolean>;
   delete$: Observable<boolean>;
-  getEntity: (id: any) => Observable<boolean>;
-  updateEntity: (id: any) => Observable<boolean>;
-  deleteEntity: (id: any) => Observable<boolean>;
+  syncCollection: (id: any) => Observable<boolean>;
 }) => {
   return combineQueries([
     loader.get$.pipe(startWith(false)),

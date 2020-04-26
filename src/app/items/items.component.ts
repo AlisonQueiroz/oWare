@@ -1,14 +1,12 @@
-import { Component, OnInit, Injectable, ChangeDetectionStrategy, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, Injectable, ChangeDetectionStrategy, ViewChild, OnDestroy, AfterContentInit } from '@angular/core';
 import { ValidatorService, EditableDataSource, TableElement } from '../Shared/Components/editable-table';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatSort } from '@angular/material/sort';
 import { WarehouseItemsQuery } from '../Store/state/warehouse-items.query';
 import { WarehouseItemsService } from '../Store/state/warehouse-items.service';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 import { WarehouseItem } from '../Store/state/warehouse-item.model';
-import { mergeAllLoading } from '../Store';
-import { NgEntityServiceLoader } from '@datorama/akita-ng-entity-service';
-import { takeUntil } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 
 @Injectable()
 export class Validator implements ValidatorService {
@@ -31,11 +29,11 @@ export class Validator implements ValidatorService {
   providers: [{ provide: ValidatorService, useClass: Validator }],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ItemsComponent implements OnInit, OnDestroy {
+export class ItemsComponent implements OnInit, AfterContentInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
 
   readonly data$ = this.itemsQuery.selectAll();
-  readonly loading$ = mergeAllLoading(this.loader.loadersFor('item'));
+  readonly loading$ = new BehaviorSubject<boolean>(true);
 
   readonly dataSource = new EditableDataSource<WarehouseItem>([], this.validator);
   private readonly destroy$ = new Subject();
@@ -50,17 +48,23 @@ export class ItemsComponent implements OnInit, OnDestroy {
   constructor(
     private validator: ValidatorService,
     private itemsQuery: WarehouseItemsQuery,
-    private itemsService: WarehouseItemsService,
-    private loader: NgEntityServiceLoader,
+    private itemsService: WarehouseItemsService
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.itemsService
       .syncCollection().pipe(
-        takeUntil(this.destroy$)
+        // takeUntil(this.destroy$)
+        take(1)
       ).subscribe(data => {
-        this.dataSource.setData([data[0].payload.doc.data()]);
+          this.dataSource.setData(data.map(e => e.payload.doc.data()));
+          this.loading$.next(false);
       });
+  }
+
+  ngAfterContentInit() {
+    this.dataSource.sort = this.sort;
+    this.dataSource.sortingDataAccessor = (row, col) => row.data[col];
   }
 
   ngOnDestroy() {
@@ -76,6 +80,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
     row.data.id
       ? this.itemsService.update(row.data)
       : this.itemsService.add(row.data);
+    row.confirmEditCreate();
   }
 
   cancelOrDelete(row: TableElement<WarehouseItem>) {
@@ -84,6 +89,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
     }
 
     this.itemsService.remove(row.data.id as string);
+    row.cancelOrDelete();
   }
 
 }

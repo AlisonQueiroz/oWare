@@ -134,7 +134,7 @@ export class TableElement<T> {
    *
    */
   confirmEditCreate() {
-    if (this.form.invalid) return;
+    if (this.form.invalid) { return; }
 
     this.initialData = this.form.value;
     this._editing$.next(!this.editing);
