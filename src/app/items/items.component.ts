@@ -7,6 +7,7 @@ import { WarehouseItemsService } from '../Store/state/warehouse-items.service';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { WarehouseItem } from '../Store/state/warehouse-item.model';
 import { take } from 'rxjs/operators';
+import * as _ from 'lodash';
 
 @Injectable()
 export class Validator implements ValidatorService {
@@ -15,7 +16,7 @@ export class Validator implements ValidatorService {
   getValidator() {
     return this.fb.group({
       id: null,
-      pn: [null, Validators.required],
+      'part number': [null, Validators.required],
       name: [null, Validators.required],
       coord: [null, Validators.required],
       quantity: [null, Validators.required]
@@ -50,17 +51,14 @@ export class ItemsComponent implements OnInit, AfterContentInit, OnDestroy {
     'name',
     'coord',
     'quantity',
-    'pn'
+    'part number'
   ];
 
-  readonly allColumns = this.displayedColumns.concat('actions');
+  readonly allColumns = this.displayedColumns
+    .concat('actions');
 
-  readonly columnTitles = [
-    'Name',
-    'Coord',
-    'Quantity',
-    'Part Number'
-  ];
+  readonly columnTitles = this.displayedColumns
+    .map(c => _.startCase(c));
 
   constructor(
     private validator: ValidatorService,
