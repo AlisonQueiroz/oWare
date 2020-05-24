@@ -1,19 +1,19 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NG_ENTITY_SERVICE_CONFIG } from '@datorama/akita-ng-entity-service';
-import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { AkitaNgRouterStoreModule } from '@datorama/akita-ng-router-store';
-import { environment } from '../environments/environment';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
-import { AngularFireModule } from '@angular/fire';
-import { ItemsComponent } from './items/items.component';
+import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { environment } from '../environments/environment';
 import { MaterialModule } from './Shared/material.module';
+import { ItemsComponent } from './items/items.component';
+import { AppRoutingModule } from './app-routing.module';
+import { AngularFireModule } from '@angular/fire';
+import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [

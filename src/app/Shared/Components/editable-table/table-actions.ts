@@ -43,9 +43,9 @@ export class TableActions<T extends { id?: ID }>
   readonly destroy$ = new Subject();
 
   constructor(
-    private query: GenericQuery<T>,
+    private gValidator: ValidatorService,
     private service: GenericService<T>,
-    private gValidator: ValidatorService
+    private query: GenericQuery<T>
   ) {}
 
   // Routines
@@ -69,7 +69,9 @@ export class TableActions<T extends { id?: ID }>
       return row.confirmEditCreate();
     }
 
-    row.data.id ? this.service.update(row.data) : this.service.add(row.data);
+    row.data.id
+      ? this.service.update(row.data)
+      : this.service.add(row.data);
     row.confirmEditCreate();
   }
 

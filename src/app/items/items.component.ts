@@ -34,6 +34,6 @@ export class ItemsComponent extends TableActions<WarehouseItem> {
     itemsQuery: WarehouseItemsQuery,
     itemsService: WarehouseItemsService,
   ) {
-    super(itemsQuery, itemsService, validator);
+    super(validator, itemsService, itemsQuery);
   }
 }
