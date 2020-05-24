@@ -6,7 +6,6 @@ import { WarehouseItemsQuery } from '../Store/state/warehouse-items.query';
 import { WarehouseItemsService } from '../Store/state/warehouse-items.service';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { WarehouseItem } from '../Store/state/warehouse-item.model';
-import { take } from 'rxjs/operators';
 import * as _ from 'lodash';
 
 @Injectable()
@@ -34,18 +33,16 @@ export class Validator implements ValidatorService {
 export class ItemsComponent implements OnInit, AfterContentInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
 
-  readonly data$ = this.itemsQuery.selectAll();
-  readonly list$ = this.itemsService
-    .syncCollection().pipe(
-      take(1)
-    ).subscribe(data => {
-      this.dataSource.setData(data.map(e => e.payload.doc.data()));
-      this.loading$.next(false);
-    });
-  readonly loading$ = new BehaviorSubject<boolean>(true);
+  readonly data$ = this.itemsQuery
+    .selectAll();
 
-  readonly dataSource = new EditableDataSource<WarehouseItem>([], this.validator);
+  readonly list$ = this.itemsService
+    .syncCollection()
+    .subscribe();
+
   private readonly destroy$ = new Subject();
+  readonly loading$ = this.itemsQuery.selectLoading();
+  readonly dataSource = new EditableDataSource<WarehouseItem>([], this.validator);
 
   readonly displayedColumns = [
     'name',
@@ -67,6 +64,9 @@ export class ItemsComponent implements OnInit, AfterContentInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.data$.subscribe(data =>
+      this.dataSource.setData(data)
+    );
   }
 
   ngAfterContentInit() {
