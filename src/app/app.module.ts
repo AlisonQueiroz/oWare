@@ -10,6 +10,7 @@ import { AkitaNgRouterStoreModule } from '@datorama/akita-ng-router-store';
 import { environment } from '../environments/environment';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
 import { AngularFireModule } from '@angular/fire';
 import { ItemsComponent } from './items/items.component';
 import { MaterialModule } from './Shared/material.module';
@@ -26,6 +27,7 @@ import { MaterialModule } from './Shared/material.module';
     AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    NgxAuthFirebaseUIModule.forRoot(environment.firebase),
     AngularFireModule.initializeApp(environment.firebase),
     environment.production ? [] : AkitaNgDevtools,
     AkitaNgRouterStoreModule

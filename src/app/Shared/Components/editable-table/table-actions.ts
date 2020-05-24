@@ -1,7 +1,8 @@
 import { OnDestroy, ViewChild, OnInit, AfterContentInit } from '@angular/core';
 import { DocumentChangeAction } from '@angular/fire/firestore/interfaces';
-import { EditableDataSource, ValidatorService, TableElement } from '.';
 import { StoreOptions } from 'akita-ng-fire/lib/utils/store-options';
+import { ValidatorService, TableElement } from './table-element';
+import { EditableDataSource } from './editable-data-source';
 import { MatSort } from '@angular/material/sort';
 import { WriteOptions } from 'akita-ng-fire';
 import { Subject, Observable } from 'rxjs';
@@ -23,21 +24,23 @@ interface GenericService<T> {
 }
 
 export class TableActions<T extends { id?: ID }>
-  implements OnInit, OnDestroy, AfterContentInit {
+  implements OnInit, AfterContentInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
 
+  // Collumns
   readonly displayedColumns = Object.keys(
     this.gValidator.getValidator().controls
   ).filter(v => v !== 'id');
-  readonly allColumns = this.displayedColumns.concat('actions');
   readonly columnTitles = this.displayedColumns.map(c => _.startCase(c));
+  readonly allColumns = this.displayedColumns.concat('actions');
 
+  // Data flow
   readonly dataSource = new EditableDataSource<T>([], this.gValidator);
   readonly list$ = this.service.syncCollection().subscribe();
   readonly loading$ = this.query.selectLoading();
   readonly data$ = this.query.selectAll();
 
-  protected readonly destroy$ = new Subject();
+  readonly destroy$ = new Subject();
 
   constructor(
     private query: GenericQuery<T>,
@@ -45,6 +48,7 @@ export class TableActions<T extends { id?: ID }>
     private gValidator: ValidatorService
   ) {}
 
+  // Routines
   ngOnInit() {
     this.data$.subscribe((data: T[]) => this.dataSource.setData(data));
   }
@@ -59,6 +63,7 @@ export class TableActions<T extends { id?: ID }>
     this.destroy$.complete();
   }
 
+  // CRUD
   confirmEditCreate(row: TableElement<T>) {
     if (!row.editing) {
       return row.confirmEditCreate();

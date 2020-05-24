@@ -1,11 +1,10 @@
+import { ValidatorService, TableActions } from '../Shared/Components/editable-table';
 import { Component, Injectable, ChangeDetectionStrategy } from '@angular/core';
-import { ValidatorService } from '../Shared/Components/editable-table';
-import { FormBuilder, Validators } from '@angular/forms';
-import { WarehouseItemsQuery } from '../Store/state/warehouse-items.query';
 import { WarehouseItemsService } from '../Store/state/warehouse-items.service';
+import { WarehouseItemsQuery } from '../Store/state/warehouse-items.query';
 import { WarehouseItem } from '../Store/state/warehouse-item.model';
+import { FormBuilder, Validators } from '@angular/forms';
 import * as _ from 'lodash';
-import { TableActions } from '../Shared/Components/editable-table/table-actions';
 
 @Injectable()
 export class Validator implements ValidatorService {
@@ -31,14 +30,10 @@ export class Validator implements ValidatorService {
 })
 export class ItemsComponent extends TableActions<WarehouseItem> {
   constructor(
-    private itemsQuery: WarehouseItemsQuery,
-    private itemsService: WarehouseItemsService,
-    private validator: ValidatorService
+    validator: ValidatorService,
+    itemsQuery: WarehouseItemsQuery,
+    itemsService: WarehouseItemsService,
   ) {
-    super(
-      itemsQuery,
-      itemsService,
-      validator
-    );
+    super(itemsQuery, itemsService, validator);
   }
 }
