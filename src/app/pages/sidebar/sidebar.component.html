@@ -1,0 +1,23 @@
+<mat-drawer-container class="example-container" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side">
+    <p>Menu</p>
+    <div class="col">
+      <button mat-fab color="primary" aria-label="Login">
+        <mat-icon>face</mat-icon>
+        Login
+      </button>
+
+      <button mat-fab color="primary" aria-label="Warehouse Items">
+        <mat-icon>shopping_cart</mat-icon>
+        Warehouse Items
+      </button>
+    </div>
+  </mat-drawer>
+
+  <div class="example-sidenav-content">
+    <button type="button" mat-button (click)="drawer.toggle()">
+      Toggle sidenav
+    </button>
+  </div>
+
+</mat-drawer-container>

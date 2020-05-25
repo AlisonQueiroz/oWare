@@ -5,20 +5,24 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NG_ENTITY_SERVICE_CONFIG } from '@datorama/akita-ng-entity-service';
 import { AkitaNgRouterStoreModule } from '@datorama/akita-ng-router-store';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './pages/login/login.component';
+import { ItemsComponent } from './pages/items/items.component';
 import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import { MaterialModule } from './Shared/material.module';
-import { ItemsComponent } from './items/items.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AngularFireModule } from '@angular/fire';
 import { AppComponent } from './app.component';
+import { SidebarComponent } from './pages/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ItemsComponent
+    ItemsComponent,
+    LoginComponent,
+    SidebarComponent
   ],
   imports: [
     FormsModule,
@@ -27,10 +31,10 @@ import { AppComponent } from './app.component';
     AppRoutingModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    NgxAuthFirebaseUIModule.forRoot(environment.firebase),
-    AngularFireModule.initializeApp(environment.firebase),
+    AkitaNgRouterStoreModule,
     environment.production ? [] : AkitaNgDevtools,
-    AkitaNgRouterStoreModule
+    NgxAuthFirebaseUIModule.forRoot(environment.firebase),
+    AngularFireModule.initializeApp(environment.firebase)
   ],
   providers: [
     AngularFirestore,

@@ -1,6 +1,7 @@
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
@@ -14,6 +15,7 @@ import { NgModule } from '@angular/core';
     MatProgressSpinnerModule,
     MatFormFieldModule,
     MatToolbarModule,
+    MatSidenavModule,
     MatButtonModule,
     MatInputModule,
     MatTableModule,
