@@ -1,25 +1,38 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'side' : 'over'"
-      [opened]="(isHandset$ | async) === false">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'side' : 'over'"
+    [opened]="(isHandset$ | async) === false"
+  >
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="/login">Login</a>
-      <a mat-list-item routerLink="/ware-items">Warehouse items</a>
+      <a mat-list-item routerLink="/login">
+        <mat-icon>person_outline</mat-icon>
+        <span>Profile</span>
+      </a>
+      <a mat-list-item routerLink="/ware-items">
+        <mat-icon>storefront</mat-icon>
+        <span>Warehouse Items</span>
+      </a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
+    <mat-toolbar color="primary" class="d-flex">
       <button
         type="button"
+        fxFlex
         aria-label="Toggle sidenav"
         mat-icon-button
         (click)="drawer.toggle()"
-        *ngIf="isHandset$ | async">
+        *ngIf="isHandset$ | async"
+      >
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>oWare</span>
+      <ngx-auth-firebaseui-avatar></ngx-auth-firebaseui-avatar>
+      <!-- <span>oWare</span> -->
     </mat-toolbar>
     <ng-content></ng-content>
   </mat-sidenav-content>

@@ -1,12 +1,13 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ItemsComponent } from './pages/items/items.component';
 import { LoginComponent } from './pages/login/login.component';
+import { ItemsComponent } from './pages/items/items.component';
+import { Routes, RouterModule } from '@angular/router';
+import { LoggedInGuard } from 'ngx-auth-firebaseui';
+import { NgModule } from '@angular/core';
 
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent},
-  { path: 'ware-items', component: ItemsComponent}
+  { path: 'ware-items', component: ItemsComponent, canActivate: [LoggedInGuard]}
 ];
 
 @NgModule({

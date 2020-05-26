@@ -19,9 +19,9 @@ import { MaterialModule } from './Shared/material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { LayoutModule } from '@angular/cdk/layout';
 import { AngularFireModule } from '@angular/fire';
 import { AppComponent } from './app.component';
-import { LayoutModule } from '@angular/cdk/layout';
 
 @NgModule({
   declarations: [
@@ -39,7 +39,14 @@ import { LayoutModule } from '@angular/cdk/layout';
     BrowserAnimationsModule,
     AkitaNgRouterStoreModule,
     environment.production ? [] : AkitaNgDevtools,
-    NgxAuthFirebaseUIModule.forRoot(environment.firebase),
+    NgxAuthFirebaseUIModule
+      .forRoot(
+        environment.firebase,
+        () => 'owarehouse', {
+          authGuardFallbackURL: 'login',
+          authGuardLoggedInURL: 'ware-items',
+        }
+      ),
     AngularFireModule.initializeApp(environment.firebase),
     LayoutModule,
     MatToolbarModule,
