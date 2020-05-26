@@ -6,8 +6,9 @@ import { NgModule } from '@angular/core';
 
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent},
-  { path: 'ware-items', component: ItemsComponent, canActivate: [LoggedInGuard]}
+  { path: '', component: LoginComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'ware-items', component: ItemsComponent, canActivate: [LoggedInGuard] }
 ];
 
 @NgModule({
