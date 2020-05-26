@@ -22,8 +22,8 @@
   <mat-sidenav-content>
     <mat-toolbar color="primary" class="d-flex">
       <button
+        class="menu"
         type="button"
-        fxFlex
         aria-label="Toggle sidenav"
         mat-icon-button
         (click)="drawer.toggle()"
@@ -32,7 +32,6 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <ngx-auth-firebaseui-avatar></ngx-auth-firebaseui-avatar>
-      <!-- <span>oWare</span> -->
     </mat-toolbar>
     <ng-content></ng-content>
   </mat-sidenav-content>

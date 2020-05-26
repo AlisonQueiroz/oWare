@@ -10,7 +10,7 @@ import { map, shareReplay } from 'rxjs/operators';
 })
 export class SidebarComponent {
 
-  isHandset$: Observable<boolean> = of(true);
+  readonly isHandset$ = of(true);
 
   // this.breakpointObserver.observe(Breakpoints.Handset)
   //   .pipe(
