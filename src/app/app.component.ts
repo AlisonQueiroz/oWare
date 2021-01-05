@@ -20,8 +20,6 @@ export class AppComponent implements OnInit {
       filter(event => event instanceof NavigationEnd),
       map(() => this.activatedRoute),
       filter((route) => route.outlet === 'primary')
-    ).subscribe(route => {
-      debugger;
-    });
+    ).subscribe();
   }
 }
