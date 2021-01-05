@@ -1,9 +1,9 @@
-import { ValidatorService, TableActions } from '../../Shared/Components/editable-table';
-import { Component, Injectable, ChangeDetectionStrategy } from '@angular/core';
-import { WarehouseItemsService } from '../../Store/state/warehouse-items.service';
-import { WarehouseItemsQuery } from '../../Store/state/warehouse-items.query';
-import { WarehouseItem } from '../../Store/state/warehouse-item.model';
 import { FormBuilder, Validators } from '@angular/forms';
+import { WarehouseItem } from 'src/app/Store/state/warehouse-item.model';
+import { Component, Injectable, ChangeDetectionStrategy } from '@angular/core';
+import { WarehouseItemsQuery } from 'src/app/Store/state/warehouse-items.query';
+import { WarehouseItemsService } from 'src/app/Store/state/warehouse-items.service';
+import { ValidatorService, TableActions } from 'src/app/Shared/Components/editable-table';
 import * as _ from 'lodash';
 
 @Injectable()

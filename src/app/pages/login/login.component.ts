@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthProvider } from 'ngx-auth-firebaseui';
 
 @Component({
   selector: 'app-login',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
+  readonly providers = AuthProvider;
   constructor() { }
 
   ngOnInit(): void {

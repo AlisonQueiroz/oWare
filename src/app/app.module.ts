@@ -1,14 +1,16 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { RequestItemDialogComponent } from './pages/warehouse/request-item-dialog/request-item-dialog.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NG_ENTITY_SERVICE_CONFIG } from '@datorama/akita-ng-entity-service';
 import { AkitaNgRouterStoreModule } from '@datorama/akita-ng-router-store';
+import { ItemsComponent } from './pages/warehouse/items/items.component';
 import { SidebarComponent } from './core/sidebar/sidebar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './pages/login/login.component';
-import { ItemsComponent } from './pages/items/items.component';
 import { NgxAuthFirebaseUIModule } from 'ngx-auth-firebaseui';
+import { SetupComponent } from './pages/setup/setup.component';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -28,7 +30,9 @@ import { AppComponent } from './app.component';
     AppComponent,
     ItemsComponent,
     LoginComponent,
-    SidebarComponent
+    SidebarComponent,
+    SetupComponent,
+    RequestItemDialogComponent
   ],
   imports: [
     FormsModule,

@@ -1,8 +1,8 @@
-import { LoginComponent } from './pages/login/login.component';
-import { ItemsComponent } from './pages/items/items.component';
-import { Routes, RouterModule } from '@angular/router';
-import { LoggedInGuard } from 'ngx-auth-firebaseui';
 import { NgModule } from '@angular/core';
+import { LoggedInGuard } from 'ngx-auth-firebaseui';
+import { Routes, RouterModule } from '@angular/router';
+import { LoginComponent } from './pages/login/login.component';
+import { ItemsComponent } from './pages/warehouse/items/items.component';
 
 
 const routes: Routes = [
