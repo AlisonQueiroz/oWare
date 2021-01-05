@@ -9,7 +9,6 @@ import * as _ from 'lodash';
 @Injectable()
 export class Validator implements ValidatorService {
   constructor(private fb: FormBuilder) {}
-
   getValidator() {
     return this.fb.group({
       id: null,
